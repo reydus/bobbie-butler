@@ -30,7 +30,7 @@ nohup python -u start.py > bobbie.log &
 Capabilities
 ------------
 
-Currently, this bot is being developed and is logged as @bot:reyd.us sometimes. For
+Currently, this bot is being developed and it is logged in as @bot:reyd.us sometimes. For
 testing purposes, you can use Shawnanastasio's tests
 
     Test it out by adding it to a group chat and doing one of the following:
