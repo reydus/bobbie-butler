@@ -9,9 +9,8 @@ Requires the [matrix-python-sdk](https://github.com/matrix-org/matrix-python-sdk
 Running
 --------
 
-This uses Python3. I recommend running this bot by using Python environment included by activating it:
+This bot uses Python3. I recommend running this bot by using the Python environment included by activating it:
 
-Once in the folder of this repository, activate the environment by using:
 ```
 source venv/bin/activate
 ```
