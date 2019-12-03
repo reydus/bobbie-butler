@@ -13,4 +13,5 @@ setup(
     license='GNU GPL v3',
     summary=DESC,
     long_description=DESC,
+    test=true
 )
