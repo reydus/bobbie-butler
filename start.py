@@ -1,5 +1,5 @@
 
-
+import wikipedia
 import random
 import yaml
 from matrix_bot_api.matrix_bot_api import MatrixBotAPI
@@ -53,21 +53,23 @@ def dieroll_callback(room, event):
     room.send_text(str(result))
 def wikipedia_callback(room, event):
     args = event['content']['body'].split()
-    args = args.pop(0) #Erase command call, leave page name.
-    page = "_".join(args) # Join using underscores.
-    page = ""
-
-def commandHandler(room, event):
-    #args = event['content']['body'].split()
-
-    if event['content']['body'][0] != ";":  # Exit Handler if first character isn't ";"
+    args.pop(0) #Erase command call, leave page name.
+    args = " ".join(args)
+    if args == "":
+        room.send_text(event["sender"]+": If you want to inquiry about a Wikipedia page, you should probably tell me which one by typing ;wikipedia <name of the page>")
         return None
     
-    args = event['content']['body'].split()
-    command = args[0][1:]   # skip ";" at the beginning.
-    args.remove(";"+command)
-    print("Detected command "+command+" with args "+args)
-
+    try:
+        print("Received wikipedia enquiry for page "+args)
+        text = wikipedia.summary(args, sentences = 3)
+        print("Which narrates..."+text)
+        room.send_text(text)
+    except wikipedia.exceptions.DisambiguationError as err:
+        options = err
+        options = str(options).split("\n")
+        options.pop(0)
+        room.send_text("Ambiguous page, try typing a more exact page title? Perhaps you meant "+str(options[0:3])[1:-1])
+    
 def main():
     # Create an instance of the MatrixBotAPI
     bot = MatrixBotAPI(USERNAME, PASSWORD, SERVER)
@@ -86,6 +88,7 @@ def main():
     bot.add_handler(dieroll_handler)
 
     wikipedia_handle = MCommandHandler("wikipedia",wikipedia_callback)
+    bot.add_handler(wikipedia_handle)
     # Start polling
     bot.start_polling()
 
