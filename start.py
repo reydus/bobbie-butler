@@ -73,7 +73,7 @@ def wikipedia_callback(room, event):
 def main():
     # Create an instance of the MatrixBotAPI
     bot = MatrixBotAPI(USERNAME, PASSWORD, SERVER)
-    general_command_handler = MRegexHandler(";", commandHandler)
+    #general_command_handler = MRegexHandler(";", commandHandler)
 
     # Add a regex handler waiting for the word Hi
     hi_handler = MRegexHandler("Hi", hi_callback)
