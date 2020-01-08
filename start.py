@@ -51,17 +51,28 @@ def dieroll_callback(room, event):
     # finally, send the result back
     result = random.randrange(1,die_max+1)
     room.send_text(str(result))
+def wikipedia_callback(room, event):
+    args = event['content']['body'].split()
+    args = args.pop(0) #Erase command call, leave page name.
+    page = "_".join(args) # Join using underscores.
+    page = ""
 
 def commandHandler(room, event):
+    #args = event['content']['body'].split()
+
+    if event['content']['body'][0] != ";":  # Exit Handler if first character isn't ";"
+        return None
+    
     args = event['content']['body'].split()
-
-    command = "a"
-
+    command = args[0][1:]   # skip ";" at the beginning.
+    args.remove(";"+command)
+    print("Detected command "+command+" with args "+args)
 
 def main():
     # Create an instance of the MatrixBotAPI
     bot = MatrixBotAPI(USERNAME, PASSWORD, SERVER)
     general_command_handler = MRegexHandler(";", commandHandler)
+
     # Add a regex handler waiting for the word Hi
     hi_handler = MRegexHandler("Hi", hi_callback)
     bot.add_handler(hi_handler)
@@ -74,6 +85,7 @@ def main():
     dieroll_handler = MCommandHandler("d", dieroll_callback)
     bot.add_handler(dieroll_handler)
 
+    wikipedia_handle = MCommandHandler("wikipedia",wikipedia_callback)
     # Start polling
     bot.start_polling()
 
