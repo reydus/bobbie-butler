@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 import wikipedia
 import random
 import yaml
@@ -94,7 +94,7 @@ def main():
 
     # Infinitely read stdin to stall main thread while the bot runs in other threads
     while True:
-        input()
+        abc = "abc" # MODIFIED
 
 
 if __name__ == "__main__":
